@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  root "books#index"
+  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { sessions: 'users/sessions' }, path: '',
+             path_names: { sign_in: 'login', sign_out: 'logout' }, as: 'user_sessions'
+  root to: 'pages#index'
 
-  get "/books", to: "books#index"
+  get '/home', to: 'pages#index'
+  get "/books", to: "pages#index"
   get "/cabinet", to: "books#cabinet"
   get "/createAdvert", to: "books#createAdvert"
 end
