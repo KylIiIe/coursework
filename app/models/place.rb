@@ -29,4 +29,9 @@ class Place < ApplicationRecord
       nil
     end
   end
+
+  def self.delete_place_id (id)
+    place_id = Place.find(id)
+    place_id.delete
+  end
 end

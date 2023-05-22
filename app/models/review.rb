@@ -1,8 +1,8 @@
 class Review < ApplicationRecord
   belongs_to :user
 
-  validescrs :title, presence: true
-  validescrs :descr, presence: true
+  validates :title, presence: true
+  validates :descr, presence: true
 
   def self.add_review(title, descr, user_id)
     user = User.find(user_id)
@@ -27,5 +27,10 @@ class Review < ApplicationRecord
       puts new_review.errors.full_messages
       nil
     end
+  end
+
+  def self.delete_review_id (id)
+    review_id = Review.find(id)
+    review_id.delete
   end
 end

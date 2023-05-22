@@ -22,7 +22,7 @@ class User < ApplicationRecord
     end
   end
 
-  def self.update_user(id, name, email, city, phone_number)
+  def self.update_user(name, email, city, phone_number, id)
     user = User.find(id)
     new_user = User.new(name:, email:, city:, phone_number:)
     if new_user.valid?
@@ -44,5 +44,10 @@ class User < ApplicationRecord
     user = User.find(id)
     baned = false
     user.update(baned:)
+  end
+
+  def self.delete_user_id (id)
+    user_id = User.find(id)
+    user_id.delete
   end
 end

@@ -1,0 +1,27 @@
+<h1>Reviews</h1>
+</p><%= link_to 'Back', home_path %></p>
+<table>
+  <thead>
+  <tr>
+    <th>User</th>
+    <th>Library</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @reviews.each do |review| %>
+    <tr>
+      <td><%= review.user.name %></td>
+      <td>
+        <%= link_to 'Show', review %>
+        <%= link_to 'Edit', edit_review_path(review) %>
+        <%= button_to 'Destroy', review, method: :delete%>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Review', new_review_path %>

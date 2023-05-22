@@ -25,4 +25,8 @@ class Genre < ApplicationRecord
       nil
     end
   end
+
+  def self.delete_genre_id (id)
+    connection.execute("DELETE FROM genres WHERE id = #{id}")
+  end
 end

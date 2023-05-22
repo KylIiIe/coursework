@@ -1,0 +1,5 @@
+<h1><%= @author.name %></h1>
+
+<%= link_to 'List author', authors_path %>
+<%= link_to 'Edit author', edit_author_path%>
+<%= button_to "Destroy this author", @author, method: :delete %>

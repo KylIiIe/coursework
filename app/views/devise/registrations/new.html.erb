@@ -29,18 +29,23 @@
   </div>
 
   <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number %>
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
   </div>
 
   <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
+    <%= f.label :number %><br />
+    <%= f.text_field :number %>
   </div>
-      <!--<div class="field">
-        <%#= f.file_field :image %>
+
+  <div class="field">
+    <%= f.label :age %><br />
+    <%= f.text_field :age %>
+  </div>
+      <div class="field">
+        <%= f.file_field :image %>
         <%#= form.text_field :year_of_creation %>
-      </div>-->
+      </div>
 
   <div class="actions">
     <%= f.submit "Sign up" %>
