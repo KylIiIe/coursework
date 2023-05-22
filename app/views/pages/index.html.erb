@@ -10,27 +10,26 @@
 
 <body>
   <nav class="navbar sticky-top navbar-light bg-dark bg-opacity-60">
-    <div class="container-fluid justify-content-center">
+    <div class="container-fluid justify-content-left">
       <div class="d-flex">
         <form action="/books" method="get" class="me-2">
-          <input type="hidden" name="all" value="true">
-          <button class="btn btn-outline-light ms-2" type="submit">Головна сторінка</button>
+          <%= button_to "Головна сторінка"%>
         </form>
+        <% if user_signed_in? %>
         <form action="/cabinet" method="get" class="me-2">
-          <input type="hidden" name="all" value="false">
-          <button class="btn btn-outline-light ms-2" type="submit">Особистий кабінет</button>
+          <%= button_to "Особистий кабінет"%>
         </form>
         <form action="/createAdvert" method="get" class="me-2">
-          <input type="hidden" name="all" value="false">
-          <button class="btn btn-outline-light ms-2" type="submit">Створити оголошення</button>
+          <%= button_to "Створити оголошення"%>
         </form>
+        <% end %>
       </div>
       <div class="user-info">
         <% if user_signed_in? %>
-          <div class="user-email">Welcome <%= current_user.email %></div>
-          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "sign-out-btn" %>
+          <div class="user-email text-white"><%= current_user.email %></div>
+          <%= button_to "Вийти", destroy_user_session_path, method: :delete, class: "sign-out-btn" %>
         <% else %>
-          <%= link_to "Увійти", new_user_session_path %>
+          <%= button_to "Увійти", new_user_session_path %>
         <% end %>
       </div>
     </div>

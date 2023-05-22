@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_22_115329) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_22_150836) do
   create_table "authors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
   end
@@ -37,7 +37,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_115329) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "place_id", default: 1, null: false
+    t.bigint "user_id", default: 1, null: false
     t.index ["place_id"], name: "index_books_on_place_id"
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "genres", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -69,8 +71,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_115329) do
     t.string "name"
     t.string "city"
     t.integer "phone_number"
+    t.bigint "review_id", default: 1, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["review_id"], name: "index_users_on_review_id"
   end
 
   add_foreign_key "book_authors", "authors", column: "authors_id"
@@ -78,4 +82,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_115329) do
   add_foreign_key "book_genres", "books"
   add_foreign_key "book_genres", "genres"
   add_foreign_key "books", "places"
+  add_foreign_key "books", "users"
 end
