@@ -8,7 +8,7 @@ class Review < ApplicationRecord
     user = User.find(user_id)
     review = Review.new(title:, descr:, user:)
     if review.valid?
-      Review.save
+      review.save
       Review.last
     else
       puts review.errors.full_messages
@@ -16,12 +16,11 @@ class Review < ApplicationRecord
     end
   end
 
-  def self.update_review(id, title, descr, user_id)
-    user = User.find(user_id)
+  def self.update_review(id, title, descr)
     review = Review.find(id)
-    new_review = Review.new(title:, descr:, user:)
+    new_review = Review.new(title:, descr:)
     if new_review.valid?
-      review.update(title:, descr:, user:)
+      review.update(title:, descr:)
       Review.find(id)
     else
       puts new_review.errors.full_messages

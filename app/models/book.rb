@@ -1,19 +1,24 @@
 class Book < ApplicationRecord
+  belongs_to :deal, optional: true
+  belongs_to :genre
   belongs_to :user
-  has_many :authors
-  has_and_belongs_to_many :genres
+  has_and_belongs_to_many :authors
 
-  validates :title, presence: true, uniqueness: true
+  validates :title, presence: true
   validates :descr, presence: true
   validates :count_pages, presence: true
   validates :status, presence: true
-  validates :genres, presence: false
-  validates :authors, presence: false
+  validates :genre, presence: true
+  validates :authors, presence: true
+  validates :user, presence: true
 
-  def self.add_book(title, descr, count_pages, status)
-    book = Book.new(title:, descr:, count_pages:, status:)
+  def self.add_book(title, descr, count_pages, status, genre_id, author_ids, user_id)
+    user = User.find(user_id)
+    genre = Genre.find(genre_id)
+    authors = Author.find(author_ids)
+    book = Book.new(title:, descr:, count_pages:, status:, genre:, authors:, user:)
     if book.valid?
-      Book.save
+      book.save
       Book.last
     else
       puts book.errors.full_messages
@@ -21,9 +26,11 @@ class Book < ApplicationRecord
     end
   end
 
-  def self.update_book(id, title, descr, count_pages, status)
+  def self.update_book(id, title, descr, count_pages, status, genre_id, author_ids)
     book = Book.find(id)
-    new_book = Book.new(title:, descr:, count_pages:, status:)
+    genre = Genre.find(genre_id)
+    authors = Author.find(author_ids)
+    new_book = Book.new(title:, descr:, count_pages:, status:, genre:, authors:)
     if new_book.valid?
       book.update(title:, descr:, count_pages:, status:)
       Book.find(id)
@@ -34,8 +41,9 @@ class Book < ApplicationRecord
   end
 
   def self.delete_book_id (id)
-    book_id = Book.find(id)
-    book_id.delete
+    book = Book.find(id)
+    book.authors = []
+    book.delete
   end
 
   def self.add_book_author(book_id, author_id)

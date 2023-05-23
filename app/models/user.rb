@@ -6,15 +6,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :name, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
-  validates :city, presence: true
-  validates :phone_number, presence: true
-
-  def self.add_user(name, email, city, phone_number)
-    user = User.new(name:, email:, city:, phone_number:)
+  def self.add_user(name, email, city, phone_number, password)
+    user = User.new(name:, email:, city:, phone_number:, password:)
     if user.valid?
-      User.save
+      user.save
       User.last
     else
       puts user.errors.full_messages
@@ -22,7 +17,7 @@ class User < ApplicationRecord
     end
   end
 
-  def self.update_user(name, email, city, phone_number, id)
+  def self.update_user(id, name, email, city, phone_number, password)
     user = User.find(id)
     new_user = User.new(name:, email:, city:, phone_number:)
     if new_user.valid?
@@ -47,7 +42,10 @@ class User < ApplicationRecord
   end
 
   def self.delete_user_id (id)
-    user_id = User.find(id)
-    user_id.delete
+    user = User.find(id)
+    user.books.clear
+    user.reviews.clear
+    user.deals.clear
+    user.delete
   end
 end
