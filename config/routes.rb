@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   resources :deals
   resources :reviews
   get '/home', to: 'pages#index'
+  get '/search_book', to: 'books#search'
 end

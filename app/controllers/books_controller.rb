@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit]
+  protect_from_forgery with: :null_session
 
   def index
     @books = Book.all
@@ -7,6 +8,33 @@ class BooksController < ApplicationController
 
   def new
     set_new_book
+  end
+
+  def search
+    @genres = Genre.all
+    @authors = Author.all
+    book = Book.all
+    if params
+      if params[:author_id] and !params[:author_id].empty?
+        author = Author.find(params[:author_id])
+        book = author.books
+      end
+      if params[:status] and !params[:status].empty?
+        book = book.where(status: params[:status])
+      end
+      if params[:title] and !params[:title].empty?
+        book = book.where(title: params[:title])
+      end
+      if params[:count_pages] and !params[:count_pages].empty?
+        book = book.where(count_pages: params[:count_pages])
+      end
+      if params[:genre_id] and !params[:genre_id].empty?
+        genre = Genre.find(params[:genre_id])
+        book = book.where(genre: genre)
+      end
+    end
+    
+    @result = book
   end
 
   def create
