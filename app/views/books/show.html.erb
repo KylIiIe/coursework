@@ -5,9 +5,9 @@
 <p><strong>Count pages:</strong> <%= @book.count_pages %></p>
 
 <p><strong>Status:</strong>
-  <%= if(@book.status == true)%>
+  <% if @book.status %>
   Віддаю
-  <%= else %>
+  <% else %>
   Розшукую
   <% end %>
 </p>
@@ -21,9 +21,7 @@
 
 <h2>Genres</h2>
 <ul>
-  <% @genres.each do |genre| %>
-    <li><%= genre.name %></li>
-  <% end %>
+    <li><%= @genre.title %></li>
 </ul>
 
 <%= link_to 'List books', books_path %>

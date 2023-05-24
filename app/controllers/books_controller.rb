@@ -29,7 +29,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    @genres = @book.genres
+    @genre = @book.genre
     @authors = @book.authors
   end
 
