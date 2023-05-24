@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    @review = Review.add_review(place_params[:title], place_params[:descr], place_params[:user_id])
+    @review = Review.add_review(review_params[:title], review_params[:descr], review_params[:user_id])
     if @review
       redirect_to @review
     else
@@ -25,24 +25,24 @@ class ReviewsController < ApplicationController
   def edit; end
 
   def update
-    @review = Review.update_review(params[:id], place_params[:title], place_params[:descr], place_params[:user_id])
+    @review = Review.update_review(params[:id], review_params[:title], review_params[:descr], review_params[:user_id])
     if @review
       redirect_to @review
     else
       flash.now[:alert] = 'This review already exists!'
-      set_place
+      set_review
       render :edit
     end
   end
 
   def destroy
     Review.delete_review_id(params[:id])
-    redirect_to places_path
+    redirect_to reviews_path
   end
 
   private
 
-  def set_place
+  def set_review
     @review = Review.find(params[:id])
   end
 

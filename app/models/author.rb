@@ -1,12 +1,12 @@
 class Author < ApplicationRecord
-  belongs_to :book
+  has_and_belongs_to_many :books
 
   validates :name, presence: true, uniqueness: true
 
   def self.add_author(name)
     author = Author.new(name:)
     if author.valid?
-      connection.execute("INSERT INTO authors (name) VALUES ('#{name}')")
+      author.save
       Author.last
     else
       puts author.errors.full_messages
@@ -27,6 +27,8 @@ class Author < ApplicationRecord
   end
 
   def self.delete_author_id (id)
-    connection.execute("DELETE FROM authors WHERE id = #{id}")
+    author = Author.find(id)
+    author.books.clear
+    author.delete
   end
 end

@@ -23,16 +23,20 @@
   </div>
 
   <div class="field">
-    <%= form.label :authors, 'Authors' %>
-    <%= form.text_field :authors %>
-    <%= form.text_field :authors %>
-    <%= form.text_field :authors %>
-
+    <%= form.label :status %>
+    <%= form.select :status, [["Шукаю", "true"], ["Віддаю", "false"]] %>
   </div>
 
   <div class="field">
-    <%= form.label :genre_ids, 'Genres' %>
-    <%= form.collection_check_boxes :genre_ids, @genres, :id, :name %>
+    <%= form.label :genre_id, 'Genres' %>
+    <%= form.collection_select :genre_id, @genres, :id, :title %>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="field">
+    <%= form.label :author_ids, 'Authors' %>
+    <%= form.collection_check_boxes :author_ids, @authors, :id, :name %>
   </div>
 
   <div class="actions">

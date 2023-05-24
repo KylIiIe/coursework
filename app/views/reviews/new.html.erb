@@ -6,15 +6,15 @@
   </div>
 <% end %>
 
-<%= form_with(model: @review, url: review_path) do |form| %>
+<%= form_with(model: @review, url: reviews_path) do |form| %>
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.collection_select :user_id, @users, :id, :name %>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= form.label :library_id %>
-    <%= form.collection_select :library_id, @libraries, :id, :name %>
+    <%= form.label :descr %>
+    <%= form.text_area :descr %>
   </div>
 
   <div class="actions">

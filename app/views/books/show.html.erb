@@ -5,28 +5,22 @@
 <p><strong>Count pages:</strong> <%= @book.count_pages %></p>
 
 <p><strong>Status:</strong>
-  <%= if(@book.status == true)%>
-  Віддаю
-  <%= else %>
-  Розшукую
+  <% if @book.status %>
+    Шукаю
+  <% else %>
+    Віддаю
   <% end %>
 </p>
 
-<h2>Authors</h2>
+<p><strong>Authors:</strong></p>
 <ul>
   <% @authors.each do |author| %>
     <li><%= author.name %></li>
   <% end %>
 </ul>
 
-<h2>Genres</h2>
-<ul>
-  <% @genres.each do |genre| %>
-    <li><%= genre.name %></li>
-  <% end %>
-</ul>
+<p><strong>Genre:</strong> <%= @book.genre.title %></p>
 
 <%= link_to 'List books', books_path %>
 <%= link_to 'Edit', edit_book_path(@book) %>
 <%= button_to "Destroy this book", @book, method: :delete %>
-

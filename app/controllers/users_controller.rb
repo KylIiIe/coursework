@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.add_user(user_params[:name], user_params[:email], user_params[:city], user_params[:phone_number])
+    @user = User.add_user(user_params[:name], user_params[:email], user_params[:city], user_params[:phone_number], user_params[:password])
     if @user
       redirect_to @user
     else
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    user = User.update_user(user_params[:name], user_params[:email], user_params[:city], user_params[:phone_number], params[:id])
+    user = User.update_user(user_params[:name], user_params[:email], user_params[:city], user_params[:phone_number], user_params[:password], params[:id])
     if user
       redirect_to user
     else
@@ -53,6 +53,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :address)
+    params.require(:user).permit(:name, :email, :city, :phone_number, :password)
   end
 end

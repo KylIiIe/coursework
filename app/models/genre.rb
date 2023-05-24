@@ -1,12 +1,12 @@
 class Genre < ApplicationRecord
-  has_and_belongs_to_many :books
+  has_many :books
 
   validates :title, presence: true, uniqueness: true
 
   def self.add_genre(title)
     genre = Genre.new(title:)
     if genre.valid?
-      Genre.save
+      genre.save
       Genre.last
     else
       puts genre.errors.full_messages
@@ -14,7 +14,7 @@ class Genre < ApplicationRecord
     end
   end
 
-  def self.update_genre(id, title)
+  def self.update_genre(title, id)
     genre = Genre.find(id)
     new_genre = Genre.new(title:)
     if new_genre.valid?
@@ -26,7 +26,9 @@ class Genre < ApplicationRecord
     end
   end
 
-  def self.delete_genre_id (id)
-    connection.execute("DELETE FROM genres WHERE id = #{id}")
+  def self.delete_genre_id(id)
+    genre = Genre.find(id)
+    genre.books.clear
+    genre.delete
   end
 end

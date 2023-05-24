@@ -10,15 +10,11 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.add_book(book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status])
-    genre_ids = params[:book][:genre_ids]
-    author_ids = params[:book][:author_ids]
+    @book = Book.add_book(book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id])
+    author_ids = params[:book][:author_ids].drop(1)
     if @book
       author_ids.each do |author_id|
         Book.add_book_author(@book.id, author_id)
-      end
-      genre_ids.each do |genre_id|
-        Book.add_book_genre(@book.id, genre_id)
       end
       redirect_to @book
     else
@@ -29,15 +25,16 @@ class BooksController < ApplicationController
   end
 
   def show
-    @genres = @book.genres
+    @genres = @book.genre
     @authors = @book.authors
   end
 
-  def edit; end
+  def edit
+    @genres = @book.genre
+  end
 
   def update
-    @book = Book.update_book(book_params[:title], book_params[:descr], book_params[:count_pages],
-                             book_params[:status], params[:id])
+    @book = Book.update_book(params[:id], book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id])
     if @book
       redirect_to @book
     else
@@ -65,6 +62,6 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :descr, :count_pages, :status)
+    params.require(:book).permit(:title, :descr, :count_pages, :status, :genre_id, :user_id, author_ids: [])
   end
 end
