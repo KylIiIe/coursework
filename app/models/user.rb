@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :books
   has_many :reviews
+  has_many :mentions, foreign_key: :mentioned_user_id, dependent: :destroy
+  has_many :mentions, foreign_key: :user_id, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

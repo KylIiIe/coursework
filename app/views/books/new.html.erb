@@ -44,16 +44,9 @@
 
   <%= form.hidden_field :user_id, value: current_user.id %>
 
-  <div class="authors">
-    <%= form.label :authors, 'Authors' %>
-    <br/>
-    <div class="selected">
-      <select name="book[author_ids]" id="book_author_ids" multiple>
-        <% @authors.each do |author| %>
-          <option value=<%= author.id %>><%= author.name %></option>
-        <% end %>
-      </select>
-    </div>
+  <div class="field">
+    <%= form.label :author_ids, 'Authors' %>
+    <%= form.collection_check_boxes :author_ids, @authors, :id, :name %>
   </div>
 
   <div class="actions">

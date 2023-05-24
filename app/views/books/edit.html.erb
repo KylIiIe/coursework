@@ -24,12 +24,12 @@
 
   <div class="field">
     <%= form.label :status %>
-    <%= form.select :status, [["Шукаю", "true"], ["Віддаю", "false"]] %>
+    <%= form.select :status, [["Шукаю", true], ["Віддаю", false]] %>
   </div>
 
   <div class="field">
     <%= form.label :genre_id, 'Genres' %>
-    <%= form.collection_select :genre_id, @genres, :id, :title %>
+    <%= form.collection_select :genre_id, Genre.order(:title), :id, :title %>
   </div>
 
   <%= form.hidden_field :user_id, value: current_user.id %>
