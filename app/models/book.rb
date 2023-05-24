@@ -12,10 +12,11 @@ class Book < ApplicationRecord
   #validates :authors, presence: true
   validates :user, presence: true
 
-  def self.add_book(title, descr, count_pages, status, genre_id, user_id)
+  def self.add_book(title, descr, count_pages, status, genre_id, user_id, author_ids)
     user = User.find(user_id)
     genre = Genre.find(genre_id)
-    book = Book.new(title:, descr:, count_pages:, status:, genre:, user:)
+    authors = Author.find(author_ids)
+    book = Book.new(title:, descr:, count_pages:, status:, authors:, genre:, user:)
     if book.valid?
       book.save
       Book.last

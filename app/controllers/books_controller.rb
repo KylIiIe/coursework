@@ -10,12 +10,8 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.add_book(book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id])
-    author_ids = params[:book][:author_ids].drop(1)
+    @book = Book.add_book(book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id], book_params[:author_ids])
     if @book
-      author_ids.each do |author_id|
-        Book.add_book_author(@book.id, author_id)
-      end
       redirect_to @book
     else
       flash.now[:alert] = 'All fields must be filled!'
