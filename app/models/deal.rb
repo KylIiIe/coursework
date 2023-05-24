@@ -5,9 +5,9 @@ class Deal < ApplicationRecord
   validates :date, presence: true
   validates :books, presence: true
 
-  def self.add_deal(address, date)
+  def self.add_deal(address, date, book_ids)
     books = Book.find(book_ids)
-    deal = Deal.new(address:, date:)
+    deal = Deal.new(address:, date:, books:)
     if deal.valid?
       deal.save
       Deal.last
