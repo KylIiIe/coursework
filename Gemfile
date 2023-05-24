@@ -76,3 +76,5 @@ end
 gem "activeadmin", "~> 2.13"
 
 gem "sassc-rails", "~> 2.1"
+
+gem "cssbundling-rails", "~> 1.1"
