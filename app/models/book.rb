@@ -8,7 +8,7 @@ class Book < ApplicationRecord
   validates :descr, presence: true
   validates :count_pages, presence: true
   validates :status, presence: true
-  validates :genre, presence: false
+  #validates :genre, presence: true
   #validates :authors, presence: true
   validates :user, presence: true
 

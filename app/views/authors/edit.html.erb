@@ -13,14 +13,6 @@
   </p>
 
   <p>
-    <%= form.label :birthdate %><br>
-    <%= form.date_field :birthdate,{ value: @author.birthdate,
-                                    class: 'form-control',
-                                    required: true,
-                                    format: '%d.%m.%Y' } %>
-  </p>
-
-  <p>
     <%= form.submit %>
   </p>
 <% end %>

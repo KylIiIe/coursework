@@ -1,3 +1,13 @@
+<%= stylesheet_link_tag "dropdown" %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(function(){
+        $("#book_author_ids").select2();
+    });
+</script>
+
 <h1>New Book</h1>
 
 <% if flash[:alert] %>
@@ -34,9 +44,16 @@
 
   <%= form.hidden_field :user_id, value: current_user.id %>
 
-  <div class="field">
-    <%= form.label :author_ids, 'Authors' %>
-    <%= form.collection_check_boxes :author_ids, @authors, :id, :name %>
+  <div class="authors">
+    <%= form.label :authors, 'Authors' %>
+    <br/>
+    <div class="selected">
+      <select name="book[author_ids]" id="book_author_ids" multiple>
+        <% @authors.each do |author| %>
+          <option value=<%= author.id %>><%= author.name %></option>
+        <% end %>
+      </select>
+    </div>
   </div>
 
   <div class="actions">

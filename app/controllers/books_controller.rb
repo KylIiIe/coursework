@@ -11,7 +11,7 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.add_book(book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id])
-    author_ids = params[:book][:author_ids].drop(1)
+    author_ids = params[:book][:author_ids]
     if @book
       author_ids.each do |author_id|
         Book.add_book_author(@book.id, author_id)
