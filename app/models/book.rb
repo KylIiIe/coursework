@@ -1,5 +1,4 @@
 class Book < ApplicationRecord
-  belongs_to :deal, optional: true
   belongs_to :genre
   belongs_to :user
   has_and_belongs_to_many :authors
@@ -9,8 +8,6 @@ class Book < ApplicationRecord
   validates :descr, presence: true
   validates :count_pages, presence: true
   validates :status, presence: true
-  #validates :genre, presence: true
-  #validates :authors, presence: true
   validates :user, presence: true
 
   def self.add_book(title, descr, count_pages, status, genre_id, user_id, author_ids, image)

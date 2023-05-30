@@ -1,18 +1,25 @@
-<h1>Edit genre</h1>
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
-<%= form_with(model: @genre, url: genre_path) do |form| %>
+<br>
+<div class="container">
+  <% if user_signed_in? %>
+  <h1>Змінити жанр <%= @genre.title %></h1>
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+  <%= form_with(model: @genre, url: genre_path) do |form| %>
 
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
+    <p>
+      <%= form.label "Назва жанру" %><br>
+      <%= form.text_field :title %>
+    </p>
 
-  <%= form.hidden_field :id, value: @genre.id %>
-  <p>
-    <%= form.submit %>
-  </p>
+    <%= form.hidden_field :id, value: @genre.id %>
+    <p>
+      <%= form.submit "Змінити жанр" %>
+    </p>
+  <% end %>
+<% else %>
+<h1>Увійдіть до аккаунту!</h1>
 <% end %>
+</div>

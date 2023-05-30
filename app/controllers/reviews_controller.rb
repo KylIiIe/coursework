@@ -9,6 +9,7 @@ class ReviewsController < ApplicationController
 
   def new
     @review = Review.new
+    @users = User.all
   end
 
   def create
@@ -25,7 +26,7 @@ class ReviewsController < ApplicationController
   def edit; end
 
   def update
-    @review = Review.update_review(params[:id], review_params[:title], review_params[:descr], review_params[:user_id])
+    @review = Review.update_review(params[:id], review_params[:title], review_params[:descr])
     if @review
       redirect_to @review
     else

@@ -1,23 +1,32 @@
-<h1>New Review</h1>
+<br>
+<div class="container">
+  <h1>New Review</h1>
 
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
 
-<%= form_with(model: @review, url: reviews_path) do |form| %>
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
+  <%= form_with(model: @review, url: reviews_path) do |form| %>
+    <div class="field">
+      <%= form.label "Назва:" %><br>
+      <%= form.text_field :title %>
+    </div>
 
-  <div class="field">
-    <%= form.label :descr %>
-    <%= form.text_area :descr %>
-  </div>
+    <div class="field">
+      <%= form.label "Текст:" %><br>
+      <%= form.text_area :descr %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= form.label "Користувач:" %><br>
+      <%= form.collection_select :user_id, @users, :id, :email %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Написати відгук" %>
+    </div>
+  <% end %>
+
+</div>

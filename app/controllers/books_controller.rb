@@ -34,7 +34,7 @@ class BooksController < ApplicationController
         book = book.where(genre: genre)
       end
     end
-    
+
     @result = book
   end
 
@@ -51,11 +51,13 @@ class BooksController < ApplicationController
 
   def show
     @image = @book.image.url
+    @user = @book.user
     @genres = @book.genre
     @authors = @book.authors
   end
 
   def edit
+    @authors = Author.all
     @genres = @book.genre
   end
 

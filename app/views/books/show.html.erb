@@ -1,28 +1,30 @@
-<h1><%= @book.title %></h1>
+<br>
+<div class="container">
+  <h1><%= @book.title %></h1>
+  <img src=<%= @image %> width="300" height="400">
+  <p><strong>Опис:</strong> <%= @book.descr %></p>
+  <p><strong>Кількість сторінок:</strong> <%= @book.count_pages %></p>
+  <p><strong>Статус:</strong>
+    <% if @book.status %>
+      Віддаю
+    <% else %>
+      Розшукую
+    <% end %>
+  </p>
+  <p><strong>Автор оголошення:</strong> <%= link_to @user.email, user_path(@user) %></p>
+  <p><strong>Автори книжки:</strong></p>
+  <ul>
+    <% @authors.each do |author| %>
+      <li><%= author.name %></li>
+    <% end %>
+  </ul>
 
-<img src=<%= @image %> width="300" height="400">
+  <p><strong>Genre:</strong> <%= @book.genre.title %></p>
 
-<p><strong>Description:</strong> <%= @book.descr %></p>
-
-<p><strong>Count pages:</strong> <%= @book.count_pages %></p>
-
-<p><strong>Status:</strong>
-  <% if @book.status %>
-  Віддаю
-  <% else %>
-  Розшукую
+  <%= link_to 'Повернутися до оголошень', books_path, class: "btn btn-outline-dark" %>
+  <% if user_signed_in? && current_user.id == @book.user_id %>
+    <h4><br>Ви створили це оголошення!</h4>
+    <%= link_to 'Змінити оголошення', edit_book_path(@book), class: "btn btn-outline-dark" %>
+    <%= button_to "Видалити оголошення", @book, method: :delete %>
   <% end %>
-</p>
-
-<p><strong>Authors:</strong></p>
-<ul>
-  <% @authors.each do |author| %>
-    <li><%= author.name %></li>
-  <% end %>
-</ul>
-
-<p><strong>Genre:</strong> <%= @book.genre.title %></p>
-
-<%= link_to 'List books', books_path %>
-<%= link_to 'Edit', edit_book_path(@book) %>
-<%= button_to "Destroy this book", @book, method: :delete %>
+</div>

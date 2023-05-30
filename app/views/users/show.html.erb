@@ -1,11 +1,49 @@
-<h1><%= @user.name %></h1>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col">
+        <h1><%= @user.name %></h1>
+        <p>Email: <%= @user.email %></p>
+        <p>Місто: <%= @user.city %></p>
+        <p>Номер телефону: <%= @user.phone_number %></p>
+    </div>
+    <div class="col-lg-4 text-center">
+      <% if user_signed_in? && current_user.id == @user.id %><br>
+        <%= link_to 'Змінити свій профіль', edit_user_registration_path, class: "btn btn-outline-dark" %>
+        <%= button_to "Видалити свій профіль", @user, method: :delete %>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<p>Email: <%= @user.email %></p>
-
-<p>Number: <%= @user.city %></p>
-
-<p>Age: <%= @user.phone_number %></p>
-
-<%= link_to 'List user', users_path %>
-<%= link_to 'Edit user', edit_user_registration_path%>
-<%= button_to "Destroy this user", @user, method: :delete %>
+<br>
+<div class="container border border-dark border-2 rounded-3" style="--bs-border-opacity: .6;">
+  <div class="row p-3 border-bottom border-dark border-2 text-center" style="--bs-border-opacity: .6;">
+    <h1>Усі оголошення</h1>
+  </div>
+  <% @books.each do |book| %>
+    <% if(book.user_id == @user.id) %>
+      <div class="row p-3 border-bottom border-dark border-2" style="--bs-border-opacity: .6;">
+        <div class="col col-lg-2">
+          <img src=<%= book.image.url %> width="150" height="200">
+        </div>
+        <div class="col text-left">
+          <div class="row">
+            <h3><%= link_to book.title, book %></h3>
+          </div>
+          <div class="row">
+            <h5><%= book.descr %></h5>
+          </div>
+        </div>
+        <div class="col col-lg-2">
+          <h5><%= book.count_pages %> стор.</h5>
+          <h4><%= book.status ? 'Віддаю' : 'Розшукую' %></h4>
+          <h5>Автори книжки:</h5>
+          <% book.authors.each do |author| %>
+            <small>○ <%= author.name %> </small>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

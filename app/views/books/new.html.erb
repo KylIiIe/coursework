@@ -8,62 +8,65 @@
  });
 </script>
 
-<h1>New Book</h1>
+<br>
+<div class="container">
+  <% if user_signed_in? %>
+    <h1>Створити нове оголошення</h1>
 
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
+    <% if flash[:alert] %>
+      <div class="alert alert-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
-<%= form_with(model: @book, url: books_path) do |form| %>
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
+    <%= form_with(model: @book, url: books_path) do |form| %>
+      <div class="field">
+        <%= form.label "Назва оголошення:" %><br>
+        <%= form.text_field :title %>
+      </div>
 
-  <div class="field">
-    <%= form.label :descr %>
-    <%= form.text_area :descr %>
-  </div>
+      <div class="field">
+        <%= form.label "Опис оголошення:" %><br>
+        <%= form.text_area :descr %>
+      </div>
 
-  <div class="field">
-    <%= form.label :count_pages %>
-    <%= form.number_field :count_pages %>
-  </div>
+      <div class="field">
+        <%= form.label "Кількість сторінок книги:" %><br>
+        <%= form.number_field :count_pages %>
+      </div>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, [["Шукаю", "true"], ["Віддаю", "false"]] %>
-  </div>
+      <div class="field">
+        <%= form.label "Статус оголошення:" %>
+        <%= form.select :status, [["Віддаю", "true"], ["Розшукую", "false"]] %>
+      </div>
 
-  <div class="field">
-    <%= form.label :genre_id, 'Genres' %>
-    <%= form.collection_select :genre_id, @genres, :id, :title %>
-  </div>
+      <div class="field">
+        <%= form.label :genre_id, 'Жанр:' %>
+        <%= form.collection_select :genre_id, @genres, :id, :title %>
+      </div>
 
-  <%= form.hidden_field :user_id, value: current_user.id %>
+      <%= form.hidden_field :user_id, value: current_user.id %>
 
-  <div class="authors">
-    <%= form.label :authors, 'Authors' %>
-    <br/>
-    <div class="selected">
-        <select name="book[author_ids][]" id="book_author_ids" multiple>
-          <% @authors.each do |author| %>
-            <option name="[]" value=<%= author.id %>><%= author.name %></option>
-          <% end %>
-        </select>
-    </div>
-  </div>
+      <div class="authors">
+        <%= form.label :authors, 'Автори:' %>
+        <br/>
+        <div class="selected">
+            <select name="book[author_ids][]" id="book_author_ids" multiple>
+              <% @authors.each do |author| %>
+                <option name="[]" value=<%= author.id %>><%= author.name %></option>
+              <% end %>
+            </select>
+        </div>
+      </div>
 
-  <div class="field">
-    <%= form.label :image, 'Add image' %>
-    <%= form.file_field :image %>
-  </div>
+      <div class="field">
+        <%= form.label :image, 'Add image' %>
+        <%= form.file_field :image %>
+      </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<%= link_to 'Back', books_path %>
+      <div class="actions">
+        <%= form.submit "Створити оголошення" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

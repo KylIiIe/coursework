@@ -5,7 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
     create_table :users do |t|
       t.string "name"
       t.string "city"
-      t.integer "phone_number"
+      t.bigint "phone_number"
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""

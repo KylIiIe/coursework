@@ -1,18 +1,26 @@
-<h1>Edit author</h1>
+<br>
+<div class="container">
+  <% if user_signed_in? %>
+    <h1>Змінити автора <%= @author.name %></h1>
+  <% else %>
+    <h1>Увійдіть до аккаунту!</h1>
+  <% end %>
 
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
 
-<%= form_with(model: @author, url: author_path) do |form| %>
-  <p>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  </p>
-
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+  <% if user_signed_in? %>
+    <%= form_with(model: @author, url: author_path) do |form| %>
+      <p>
+        <%= form.label "Ім'я" %><br>
+        <%= form.text_field :name %>
+      </p>
+      <p>
+        <%= form.submit 'Змінити автора' %>
+      </p>
+    <% end %>
+  <% end %>
+</div>

@@ -1,17 +1,18 @@
 class UsersController < ApplicationController
+  include ActiveStorage::SetCurrent
   before_action :set_user, only: %i[show edit]
 
   def index
-    #@users = UsersQuery.main_sort(params)
     @users = User.all
-    #@sort_by = params[:sort_by]
     @name = params[:name]
     @email = params[:email]
     @city = params[:city]
     @phone_number = params[:phone_number]
   end
 
-  def show; end
+  def show
+    @books = Book.all
+  end
 
   def new
     @user = User.new

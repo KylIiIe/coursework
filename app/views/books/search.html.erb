@@ -1,65 +1,75 @@
-
-<h2> Search </h2>
-<%= form_with url: "/search_book", method: "get" do |form| %>
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :count_pages %>
-    <%= form.number_field :count_pages %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, [["Шукаю", "true"], ["Віддаю", "false"]], { include_blank: true } %>
-  </div>
-
-  <div class="field">
-    <%= form.label :genre_id, 'Genres' %>
-    <%= form.collection_select :genre_id, @genres, :id, :title, { include_blank: true } %>
-  </div>
-
-  <div class="field">
-    <%= form.label :author_id, 'Authors' %>
-    <%= form.collection_select :author_id, @authors, :id, :name, { include_blank: true } %>
-  </div>
-
-  <%= form.button "Search" %>
-<% end %>
-
-
-<table>
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Authors</th>
-    <th>Count pages</th>
-    <th>Status</th>
-    <th>Genre</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @result.each do |book| %>
-    <tr>
-      <td><%= book.title %></td>
-      <td><%= book.descr %></td>
-      <td><%= book.authors.map {|a| a.name}.join(', ') %></td>
-      <td><%= book.count_pages %></td>
-      <td><%= book.status ? 'Віддаю' : 'Розшукую' %></td>
-      <td><%= book.genre.title %></td>
-      <td><%= link_to 'Show', book %></td>
-      <td><%= link_to 'Edit', edit_book_path(book) %></td>
-      <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
+<br>
+<div class="container">
+  <h2> Пошук </h2>
+  <%= form_with url: "/search_book", method: "get" do |form| %>
+    <div class="row">
+      <div class="col-lg-3">
+        <%= form.label "За точною назвою:" %>
+      </div>
+      <div class="col">
+        <%= form.text_field :title %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <%= form.label "За кількістю сторінок:" %>
+      </div>
+      <div class="col">
+        <%= form.number_field :count_pages %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <%= form.label "За типом оголошення:" %>
+      </div>
+      <div class="col">
+        <%= form.select :status, [["Шукаю", "true"], ["Віддаю", "false"]], { include_blank: true } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <%= form.label :genre_id, 'За жанром:' %>
+      </div>
+      <div class="col">
+        <%= form.collection_select :genre_id, @genres, :id, :title, { include_blank: true } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <%= form.label :author_id, 'За авторами:' %>
+      </div>
+      <div class="col">
+        <%= form.collection_select :author_id, @authors, :id, :name, { include_blank: true } %>
+      </div>
+    </div>
+    <%= form.button "Знайти" %>
   <% end %>
-  </tbody>
-</table>
+</div>
 
 <br>
-
-<%= link_to 'List books', books_path %>
+<div class="container border border-dark border-2 rounded-3" style="--bs-border-opacity: .6;">
+  <% @result.each do |book| %>
+    <div class="row p-3 border-bottom border-dark border-2" style="--bs-border-opacity: .6;">
+      <div class="col col-lg-2">
+        <img src=<%= book.image.url %> width="150" height="200">
+      </div>
+      <div class="col text-left">
+        <div class="row">
+          <h3><%= link_to book.title, book %></h3>
+        </div>
+        <div class="row">
+          <h5><%= book.descr %></h5>
+        </div>
+      </div>
+      <div class="col col-lg-2">
+        <h5><%= book.count_pages %> стор.</h5>
+        <h4><%= book.status ? 'Віддаю' : 'Розшукую' %></h4>
+        <h5>Автори книжки:</h5>
+        <% book.authors.each do |author| %>
+          <small>○ <%= author.name %> </small>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<br>

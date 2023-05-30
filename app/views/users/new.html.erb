@@ -4,20 +4,46 @@
   <div class="alert alert-danger">
     <%= flash[:alert] %>
   </div>
-<%end %>
-
-<%= form_with(model: @user, url: users_path) do |form| %>
-  <p>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  </p>
-
-  <p>
-    <%= form.label :address %><br>
-    <%= form.text_field :address %>
-  </p>
-
-  <p>
-    <%= form.submit %>
-  </p>
 <% end %>
+<div class="container">
+  <div class="form-box">
+    <%= form_with(model: @user, url: users_path) do |form| %>
+      <div class="field">
+        <%= form.label :name %><br />
+        <%= form.text_field :name %>
+      </div>
+
+      <div class="field">
+        <%= form.label :email %><br />
+        <%= form.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :city %><br />
+        <%= form.text_field :city %>
+      </div>
+
+      <div class="field">
+        <%= form.label :phone_number %><br />
+        <%= form.text_field :phone_number %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= form.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password_confirmation %><br />
+        <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Sign up" %>
+      </div>
+    <% end %>
+  </div>
+</div>

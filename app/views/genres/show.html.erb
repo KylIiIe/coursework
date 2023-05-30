@@ -1,5 +1,14 @@
-<h1><%= @genre.title %></h1>
+<br>
+<div class="container">
+  <% if user_signed_in? %>
+    <h1>Назва жанру: <%= @genre.title %></h1>
+  <% else %>
+    <h1>Увійдіть до аккаунту!</h1>
+  <% end %>
 
-<%= link_to 'List genre', genres_path %>
-<%= link_to 'Edit genre', edit_genre_path%>
-<%= button_to "Destroy this genre", @genre, method: :delete %>
+  <%= link_to 'Повернутися до списку жанрів', genres_path, class: "btn btn-outline-dark" %><br>
+  <% if user_signed_in? %>
+    <%= link_to 'Змінити жанр', edit_genre_path, class: "btn btn-outline-dark" %>
+    <%= button_to "Видалити жанр", @genre, method: :delete %>
+  <% end %>
+</div>

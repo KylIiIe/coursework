@@ -83,17 +83,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_131431) do
     t.boolean "status"
     t.bigint "user_id", null: false
     t.bigint "genre_id", null: false
-    t.bigint "deal_id"
-    t.index ["deal_id"], name: "index_books_on_deal_id"
     t.index ["genre_id"], name: "index_books_on_genre_id"
     t.index ["user_id"], name: "index_books_on_user_id"
-  end
-
-  create_table "deals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "address"
-    t.datetime "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "genres", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -112,7 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_131431) do
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "city"
-    t.integer "phone_number"
+    t.bigint "phone_number"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -128,7 +119,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_131431) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "authors_books", "authors"
   add_foreign_key "authors_books", "books"
-  add_foreign_key "books", "deals"
   add_foreign_key "books", "genres"
   add_foreign_key "books", "users"
   add_foreign_key "reviews", "users"

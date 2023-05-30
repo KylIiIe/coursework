@@ -8,7 +8,6 @@ class CreateBooks < ActiveRecord::Migration[7.0]
 
       t.references :user, null: false, foreign_key: true
       t.references :genre, null: false, foreign_key: true
-      t.references :deal, null: true, foreign_key: true
     end
   end
 end
