@@ -3,6 +3,7 @@ class Book < ApplicationRecord
   belongs_to :genre
   belongs_to :user
   has_and_belongs_to_many :authors
+  has_one_attached :image
 
   validates :title, presence: true
   validates :descr, presence: true
@@ -12,11 +13,11 @@ class Book < ApplicationRecord
   #validates :authors, presence: true
   validates :user, presence: true
 
-  def self.add_book(title, descr, count_pages, status, genre_id, user_id, author_ids)
+  def self.add_book(title, descr, count_pages, status, genre_id, user_id, author_ids, image)
     user = User.find(user_id)
     genre = Genre.find(genre_id)
     authors = Author.find(author_ids)
-    book = Book.new(title:, descr:, count_pages:, status:, authors:, genre:, user:)
+    book = Book.new(title:, descr:, count_pages:, status:, authors:, genre:, user:, image:)
     if book.valid?
       book.save
       Book.last
@@ -26,13 +27,17 @@ class Book < ApplicationRecord
     end
   end
 
-  def self.update_book(id, title, descr, count_pages, status, genre_id, user_id)
+  def self.update_book(id, params)
     book = Book.find(id)
-    genre = Genre.find(genre_id)
-    user = User.find(user_id)
-    new_book = Book.new(title:, descr:, count_pages:, status:, genre:, user:)
+    params[:genre] = Genre.find(params[:genre_id])
+    params[:user] = User.find(params[:user_id])
+    params[:authors] = Author.find(params[:author_ids])
+    params.delete(:genre_id)
+    params.delete(:user_id)
+    params.delete(:author_ids)
+    new_book = Book.new(params)
     if new_book.valid?
-      book.update(title:, descr:, count_pages:, status:, genre:, user:)
+      book.update(params)
       Book.find(id)
     else
       puts new_book.errors.full_messages

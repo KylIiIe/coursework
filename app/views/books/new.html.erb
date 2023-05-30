@@ -44,7 +44,7 @@
 
   <%= form.hidden_field :user_id, value: current_user.id %>
 
-   <div class="authors">
+  <div class="authors">
     <%= form.label :authors, 'Authors' %>
     <br/>
     <div class="selected">
@@ -54,6 +54,11 @@
           <% end %>
         </select>
     </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :image, 'Add image' %>
+    <%= form.file_field :image %>
   </div>
 
   <div class="actions">

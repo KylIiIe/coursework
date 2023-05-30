@@ -1,3 +1,12 @@
+<%= stylesheet_link_tag "dropdown" %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+ $(function(){
+  $("#book_author_ids").select2();
+ });
+</script>
 <h1>Edit Book</h1>
 
 <% if flash[:alert] %>
@@ -30,6 +39,28 @@
   <div class="field">
     <%= form.label :genre_id, 'Genres' %>
     <%= form.collection_select :genre_id, Genre.order(:title), :id, :title %>
+  </div>
+
+  <div class="authors">
+    <%= form.label :authors, 'Authors' %>
+    <br/>
+    <div class="selected">
+        <select name="book[author_ids][]" id="book_author_ids" multiple>
+          <% Author.all.each do |author| %>
+            <option <%= @book.authors.map{ |a| a.name }.include?(author.name) ? "selected" : "" %> name="[]" value=<%= author.id %>>
+              <%= author.name %>
+            </option>
+          <% end %>
+        </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <p> Current image: </p>
+    <img src=<%= @book.image.url %> width="200" height="300">
+    <br/>
+    <%= form.label :image, 'Change image' %>
+    <%= form.file_field :image %>
   </div>
 
   <%= form.hidden_field :user_id, value: current_user.id %>
