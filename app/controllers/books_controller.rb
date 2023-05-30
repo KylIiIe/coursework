@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  include ActiveStorage::SetCurrent
   before_action :set_book, only: %i[show edit]
   protect_from_forgery with: :null_session
 
@@ -38,7 +39,7 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.add_book(book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id], book_params[:author_ids])
+    @book = Book.add_book(book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id], book_params[:author_ids], book_params[:image])
     if @book
       redirect_to @book
     else
@@ -49,6 +50,7 @@ class BooksController < ApplicationController
   end
 
   def show
+    @image = @book.image.url
     @genres = @book.genre
     @authors = @book.authors
   end
@@ -58,7 +60,7 @@ class BooksController < ApplicationController
   end
 
   def update
-    @book = Book.update_book(params[:id], book_params[:title], book_params[:descr], book_params[:count_pages], book_params[:status], book_params[:genre_id], book_params[:user_id])
+    @book = Book.update_book(params[:id], book_params.to_h)
     if @book
       redirect_to @book
     else
@@ -86,6 +88,6 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :descr, :count_pages, :status, :genre_id, :user_id, author_ids: [])
+    params.require(:book).permit(:title, :descr, :count_pages, :status, :genre_id, :user_id, :image, author_ids: [])
   end
 end
